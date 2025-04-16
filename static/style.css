@@ -1,0 +1,101 @@
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: url('https://images.unsplash.com/photo-1536104968055-4d61aa56f46a') no-repeat center center fixed;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.chat-container {
+  background: rgba(255, 255, 255, 0.80);
+  padding: 20px;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 900px;
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  position: relative;
+}
+
+.messages {
+  flex: 1;
+  overflow-y: auto;
+  margin-bottom: 10px;
+  max-height: calc(80vh - 100px); /* Adjust the height */
+  word-wrap: break-word;
+  padding-right: 10px;
+}
+
+.message {
+  padding: 12px;
+  margin: 8px 0;
+  border-radius: 12px;
+  max-width: 90%; /* Limit message width */
+  line-height: 1.4;
+}
+
+.user {
+  background-color: #d1e7ff;
+  align-self: flex-end;
+}
+
+.bot {
+  background-color: #e8e8e8;
+  align-self: flex-start;
+}
+
+.input-container {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 12px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  height: 40px;
+  margin-right: 10px;
+}
+
+button {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 12px;
+  background-color: #007bff;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  height: 40px;
+}
+
+.loader {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #3498db;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 2s linear infinite;
+  margin: 20px auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.chat-container {
+  position: relative;
+}
+
+.messages {
+  padding-bottom: 50px; /* Keep space for the loader */
+}

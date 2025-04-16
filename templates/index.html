@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat with Ollama</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="chat-container">
+        <h2>Chat with Local LLM</h2>
+        <div id="messages" class="messages"></div>
+        <div class="input-container">
+            <input type="text" id="input" placeholder="Type a message..." />
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        function sendMessage() {
+            const input = document.getElementById("input");
+            const text = input.value;
+            if (!text.trim()) return;
+
+            // Display the user's message
+            const userMsg = `<div class='message user'>${text}</div>`;
+            document.getElementById("messages").innerHTML += userMsg;
+            input.value = "";
+
+            // Create and show loader
+            const loader = document.createElement('div');
+            loader.classList.add('loader');
+            document.querySelector('.chat-container').appendChild(loader);
+
+            // Make the API call to get the response
+            fetch("/chat", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ message: text })
+            })
+            .then(res => res.json())
+            .then(data => {
+                const botMsg = `<div class='message bot'>${data.response}</div>`;
+                document.getElementById("messages").innerHTML += botMsg;
+                
+                // Remove loader after the response
+                document.querySelector('.chat-container').removeChild(loader);
+                scrollToBottom();
+            })
+            .catch(error => {
+                // If there's an error, remove loader and display error message
+                document.querySelector('.chat-container').removeChild(loader);
+                const errorMsg = `<div class='message bot'>Error: Could not get a response. Please try again.</div>`;
+                document.getElementById("messages").innerHTML += errorMsg;
+                scrollToBottom();
+            });
+        }
+
+        function scrollToBottom() {
+            const messages = document.getElementById("messages");
+            messages.scrollTop = messages.scrollHeight;
+        }
+    </script>
+</body>
+</html>
